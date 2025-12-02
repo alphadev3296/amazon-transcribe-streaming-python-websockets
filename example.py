@@ -73,7 +73,7 @@ async def receive(websocket):
 async def connect_to_websocket():
     # generate random websocket key and headers
     websocket_key = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=20))
-    extra_headers = {
+    additional_headers = {
         "Origin": "https://localhost", # If on the web, replace with streaming url
         "Sec-Websocket-Key": websocket_key,
         "Sec-Websocket-Version":"13",
@@ -86,7 +86,7 @@ async def connect_to_websocket():
                                                            number_of_channels=number_of_channels,
                                                            enable_channel_identification=channel_identification)
     async with websockets.connect(request_url, 
-                                  extra_headers=extra_headers, 
+                                  additional_headers=additional_headers, 
                                   ping_timeout=None,
                                   ) as websocket:  # Connect to the WebSocket
         await asyncio.gather(receive(websocket), send(websocket))
